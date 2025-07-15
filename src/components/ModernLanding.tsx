@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -176,20 +177,24 @@ export function ModernLanding() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 text-lg"
-                >
-                  Create Your Card
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="px-8 py-3 text-lg border-gray-300 hover:bg-gray-50"
-                >
-                  View Sample
-                </Button>
+                <Link to="/create">
+                  <Button 
+                    size="lg" 
+                    className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 text-lg w-full"
+                  >
+                    Create Your Card
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+                <Link to="/sample">
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    className="px-8 py-3 text-lg border-gray-300 hover:bg-gray-50 w-full"
+                  >
+                    View Sample
+                  </Button>
+                </Link>
               </div>
             </div>
 
@@ -372,10 +377,12 @@ export function ModernLanding() {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3">
-              Explore All Occasions
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
+            <Link to="/create">
+              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3">
+                Explore All Occasions
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -508,20 +515,24 @@ export function ModernLanding() {
             Join thousands of people who've made their celebrations unforgettable with WishWeaver
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-white text-orange-500 hover:bg-gray-100 px-8 py-3 text-lg font-semibold"
-            >
-              Start Your Card Now
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="border-white text-white hover:bg-white hover:text-orange-500 px-8 py-3 text-lg"
-            >
-              View Sample Card
-            </Button>
+            <Link to="/create">
+              <Button 
+                size="lg" 
+                className="bg-white text-orange-500 hover:bg-gray-100 px-8 py-3 text-lg font-semibold w-full"
+              >
+                Start Your Card Now
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
+            <Link to="/sample">
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-orange-500 px-8 py-3 text-lg w-full"
+              >
+                View Sample Card
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
