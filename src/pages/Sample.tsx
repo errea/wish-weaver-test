@@ -146,6 +146,7 @@ const Sample = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
                   size="lg"
+                  onClick={() => navigate('/create')}
                   className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8"
                 >
                   Create Your Card

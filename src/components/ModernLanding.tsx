@@ -163,6 +163,7 @@ export function ModernLanding() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
+                  onClick={() => navigate('/create')}
                   className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 text-lg"
                 >
                   Create Your Card
