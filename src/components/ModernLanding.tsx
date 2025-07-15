@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { WishCard } from './WishCard';
@@ -68,6 +69,7 @@ const cardDesigns = [
 ];
 
 export function ModernLanding() {
+  const navigate = useNavigate();
   const [currentDesign, setCurrentDesign] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
@@ -169,6 +171,7 @@ export function ModernLanding() {
                 <Button 
                   variant="outline" 
                   size="lg"
+                  onClick={() => navigate('/sample')}
                   className="px-8 py-3 text-lg border-gray-300 hover:bg-gray-50"
                 >
                   View Sample
