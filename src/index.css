@@ -41,9 +41,16 @@ All colors MUST be HSL.
     /* Gradients */
     --gradient-brand: linear-gradient(135deg, hsl(15 84% 58%), hsl(180 100% 35%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 40% 98%));
+    --gradient-hero: linear-gradient(120deg, hsl(15 84% 58% / 0.1), hsl(180 100% 35% / 0.1));
+    --gradient-shimmer: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Interactive states */
+    --interactive-hover: hsl(var(--primary) / 0.1);
+    --interactive-active: hsl(var(--primary) / 0.2);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -72,30 +79,42 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 215 30% 15%;
+    --background: 215 30% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 217.2 32.6% 17.5%;
+    --card: 217.2 32.6% 12%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 217.2 32.6% 17.5%;
+    --popover: 217.2 32.6% 12%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 15 84% 58%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 217.2 32.6% 15%;
     --secondary-foreground: 210 40% 98%;
     
     --wishweaver-orange: 15 84% 58%;
-    --wishweaver-teal: 180 100% 35%;
-    --wishweaver-navy: 215 30% 15%;
+    --wishweaver-teal: 180 100% 40%;
+    --wishweaver-navy: 215 30% 12%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 217.2 32.6% 15%;
+    --muted-foreground: 215 20.2% 70%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 217.2 32.6% 15%;
     --accent-foreground: 210 40% 98%;
+
+    /* Dark mode specific gradients */
+    --gradient-brand: linear-gradient(135deg, hsl(15 84% 58%), hsl(180 100% 40%));
+    --gradient-card: linear-gradient(145deg, hsl(217.2 32.6% 12%), hsl(217.2 32.6% 15%));
+    --gradient-hero: linear-gradient(120deg, hsl(15 84% 58% / 0.15), hsl(180 100% 40% / 0.15));
+    
+    /* Dark mode shadows */
+    --card-shadow: 0 10px 30px hsl(0 0% 0% / 0.3);
+    --card-shadow-hover: 0 20px 40px hsl(0 0% 0% / 0.4);
+
+    --interactive-hover: hsl(var(--primary) / 0.15);
+    --interactive-active: hsl(var(--primary) / 0.25);
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
