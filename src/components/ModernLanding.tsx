@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { WishCard } from './WishCard';
+import { ThemeToggle } from './ThemeToggle';
 import { 
   Heart, 
   Users, 
@@ -46,6 +47,7 @@ const sampleMessages = [
     id: '2',
     author: 'Mike',
     content: 'Another year older, another year wiser! Have an amazing day filled with joy and laughter.',
+
   },
   {
     id: '3',
@@ -88,17 +90,27 @@ const cardDesigns = [
 export function ModernLanding() {
   const [currentDesign, setCurrentDesign] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [showSlideshow, setShowSlideshow] = useState(false);
+  const [slideshowIndex, setSlideshowIndex] = useState(0);
+  const imageMessages = sampleMessages.filter(m => m.media && (m.media.type === 'image' || m.media.type === 'gif'));
 
-  // Auto-rotate cards every 4 seconds
+  // Card design auto-rotation
   useState(() => {
     if (!isAutoPlay) return;
-    
     const interval = setInterval(() => {
       setCurrentDesign((prev) => (prev + 1) % cardDesigns.length);
     }, 4000);
-    
     return () => clearInterval(interval);
   });
+
+  // Slideshow auto-advance
+  useEffect(() => {
+    if (!showSlideshow) return;
+    const interval = setInterval(() => {
+      setSlideshowIndex((prev) => (prev + 1) % imageMessages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [showSlideshow, imageMessages.length]);
 
   const nextDesign = () => {
     setCurrentDesign((prev) => (prev + 1) % cardDesigns.length);
@@ -111,7 +123,11 @@ export function ModernLanding() {
   const currentCard = cardDesigns[currentDesign];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 relative">
+      {/* Dark mode toggle button */}
+      <div className="absolute top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -119,14 +135,14 @@ export function ModernLanding() {
             {/* Left Content */}
             <div className="space-y-8">
               <div className="space-y-4">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
                   Make Every{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
                     Occasion
                   </span>{' '}
                   Special
                 </h1>
-                <p className="text-xl text-gray-600 leading-relaxed">
+                <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
                   Create beautiful group cards with messages, photos, and videos from 
                   multiple contributors. Perfect for birthdays, farewells, celebrations, and more.
                 </p>
@@ -135,7 +151,7 @@ export function ModernLanding() {
               {/* Features */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-full bg-orange-100">
+                  <div className="p-2 rounded-full bg-orange-100 dark:bg-orange-900/40">
                     <Users className="w-5 h-5 text-orange-600" />
                   </div>
                   <div>
@@ -145,7 +161,7 @@ export function ModernLanding() {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-full bg-blue-100">
+                  <div className="p-2 rounded-full bg-blue-100 dark:bg-blue-900/40">
                     <Heart className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
@@ -155,7 +171,7 @@ export function ModernLanding() {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-full bg-green-100">
+                  <div className="p-2 rounded-full bg-green-100 dark:bg-green-900/40">
                     <Sparkles className="w-5 h-5 text-green-600" />
                   </div>
                   <div>
@@ -165,7 +181,7 @@ export function ModernLanding() {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-full bg-purple-100">
+                  <div className="p-2 rounded-full bg-purple-100 dark:bg-purple-900/40">
                     <Gift className="w-5 h-5 text-purple-600" />
                   </div>
                   <div>
@@ -180,7 +196,7 @@ export function ModernLanding() {
                 <Link to="/create">
                   <Button 
                     size="lg" 
-                    className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 text-lg w-full"
+                    className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 text-lg w-full dark:from-orange-600 dark:to-red-700"
                   >
                     Create Your Card
                     <ArrowRight className="w-5 h-5 ml-2" />
@@ -190,7 +206,7 @@ export function ModernLanding() {
                   <Button 
                     variant="outline" 
                     size="lg"
-                    className="px-8 py-3 text-lg border-gray-300 hover:bg-gray-50 w-full"
+                    className="px-8 py-3 text-lg border-gray-300 hover:bg-gray-50 w-full dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white"
                   >
                     View Sample
                   </Button>
@@ -204,14 +220,82 @@ export function ModernLanding() {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setIsAutoPlay(!isAutoPlay)}
+                    onClick={() => {
+                      if (showSlideshow) {
+                        setShowSlideshow(false);
+                      } else if (imageMessages.length > 0) {
+                        setSlideshowIndex(0);
+                        setShowSlideshow(true);
+                      }
+                    }}
                     className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
                   >
-                    {isAutoPlay ? 
+                    {showSlideshow ? 
                       <Pause className="w-4 h-4 text-gray-600" /> : 
                       <Play className="w-4 h-4 text-gray-600" />
                     }
                   </button>
+      {/* Slideshow Modal */}
+      {showSlideshow && imageMessages.length > 0 && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-6 max-w-md w-full flex flex-col items-center">
+            <button
+              className="absolute top-2 right-2 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+              onClick={() => setShowSlideshow(false)}
+              title="Close slideshow"
+            >
+              <Pause className="w-5 h-5 text-gray-600" />
+            </button>
+            <div className="w-full h-64 flex items-center justify-center mb-4">
+              {imageMessages[slideshowIndex].media?.type === 'image' ? (
+                <img
+                  src={imageMessages[slideshowIndex].media?.url}
+                  alt="Slideshow"
+                  className="max-h-60 rounded-lg object-contain shadow-lg"
+                />
+              ) : (
+                <img
+                  src={imageMessages[slideshowIndex].media?.url}
+                  alt="Slideshow GIF"
+                  className="max-h-60 rounded-lg object-contain shadow-lg"
+                />
+              )}
+            </div>
+            <div className="text-center">
+              <div className="font-semibold text-gray-800 dark:text-white mb-1">
+                {imageMessages[slideshowIndex].author}
+              </div>
+              <div className="text-gray-600 dark:text-gray-300 text-sm">
+                {imageMessages[slideshowIndex].content}
+              </div>
+            </div>
+            <div className="flex gap-4 mt-6">
+              <button
+                onClick={() => setSlideshowIndex((slideshowIndex - 1 + imageMessages.length) % imageMessages.length)}
+                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                title="Previous"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-600" />
+              </button>
+              <button
+                onClick={() => setSlideshowIndex((slideshowIndex + 1) % imageMessages.length)}
+                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                title="Next"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+            <div className="mt-4 flex gap-1 justify-center">
+              {imageMessages.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`inline-block w-2 h-2 rounded-full ${idx === slideshowIndex ? 'bg-orange-500' : 'bg-gray-300'}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
                   <span className="text-sm text-gray-500">
                     {currentCard.name}
                   </span>
@@ -263,12 +347,12 @@ export function ModernLanding() {
       </section>
 
       {/* Make Every Occasion Extraordinary */}
-      <section className="py-20 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
+      <section className="py-20 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
             Make Every Occasion Extraordinary
           </h2>
-          <p className="text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-16 max-w-3xl mx-auto">
             Whether it's a birthday, wedding, graduation, or just saying thank you, 
             WishWeaver helps you create unforgettable moments that bring people together.
           </p>
@@ -284,8 +368,8 @@ export function ModernLanding() {
                 <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                   <feature.icon className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.desc}</p>
+                <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{feature.desc}</p>
               </div>
             ))}
           </div>
@@ -293,13 +377,13 @@ export function ModernLanding() {
       </section>
 
       {/* How WishWeaver Works */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-white dark:bg-gray-950">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
               How WishWeaver Works
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               Creating memorable group cards has never been easier
             </p>
           </div>
@@ -334,8 +418,8 @@ export function ModernLanding() {
                     {step.step}
                   </Badge>
                 </div>
-                <h3 className="text-2xl font-semibold mb-4">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">{step.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{step.description}</p>
               </div>
             ))}
           </div>
@@ -343,13 +427,13 @@ export function ModernLanding() {
       </section>
 
       {/* What Occasion Are You Celebrating */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-teal-50">
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-teal-50 dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
               What Occasion Are You Celebrating?
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               Discover the perfect card design for every special moment
             </p>
           </div>
@@ -370,7 +454,7 @@ export function ModernLanding() {
                   <div className={`w-16 h-16 bg-gradient-to-br ${occasion.color} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
                     <occasion.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="font-semibold text-lg">{occasion.name}</h3>
+                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{occasion.name}</h3>
                 </CardContent>
               </Card>
             ))}
@@ -388,13 +472,13 @@ export function ModernLanding() {
       </section>
 
       {/* Customer Testimonials */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-white dark:bg-gray-950">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
               What Our Customers Say
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               Real stories from people who've created unforgettable moments
             </p>
           </div>
@@ -431,7 +515,7 @@ export function ModernLanding() {
                     ))}
                   </div>
                   <Quote className="w-8 h-8 text-gray-300 mb-4" />
-                  <p className="text-gray-600 leading-relaxed mb-6 italic">
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 italic">
                     "{testimonial.testimonial}"
                   </p>
                   <div className="flex items-center">
@@ -439,8 +523,8 @@ export function ModernLanding() {
                       {testimonial.avatar}
                     </div>
                     <div>
-                      <h4 className="font-semibold">{testimonial.name}</h4>
-                      <p className="text-gray-500 text-sm">{testimonial.role}</p>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
+                      <p className="text-gray-500 dark:text-gray-400 text-sm">{testimonial.role}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -451,13 +535,13 @@ export function ModernLanding() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
               Frequently Asked Questions
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               Everything you need to know about WishWeaver
             </p>
           </div>
@@ -489,14 +573,14 @@ export function ModernLanding() {
                 answer: "We offer both free and premium options. Basic cards are free, while premium features include advanced designs, unlimited contributors, and cash gift options."
               }
             ].map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border border-gray-200 rounded-lg px-6 bg-white">
-                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+              <AccordionItem key={index} value={`item-${index}`} className="border border-gray-200 dark:border-gray-700 rounded-lg px-6 bg-white dark:bg-gray-950">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline text-gray-900 dark:text-white">
                   <div className="flex items-center">
                     <HelpCircle className="w-5 h-5 text-orange-500 mr-3 flex-shrink-0" />
                     {faq.question}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600 leading-relaxed pt-2">
+                <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed pt-2">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -506,7 +590,7 @@ export function ModernLanding() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 to-red-500">
+      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 to-red-500 dark:from-orange-700 dark:to-red-900">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to Create Something Special?
@@ -518,7 +602,7 @@ export function ModernLanding() {
             <Link to="/create">
               <Button 
                 size="lg" 
-                className="bg-white text-orange-500 hover:bg-gray-100 px-8 py-3 text-lg font-semibold w-full"
+                className="bg-white text-orange-500 hover:bg-gray-100 px-8 py-3 text-lg font-semibold w-full dark:bg-gray-900 dark:text-orange-400 dark:hover:bg-gray-800"
               >
                 Start Your Card Now
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -528,7 +612,7 @@ export function ModernLanding() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-white text-white hover:bg-white hover:text-orange-500 px-8 py-3 text-lg w-full"
+                className="border-white text-white hover:bg-white hover:text-orange-500 px-8 py-3 text-lg w-full dark:border-orange-400 dark:hover:bg-gray-900 dark:hover:text-orange-400"
               >
                 View Sample Card
               </Button>

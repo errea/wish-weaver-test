@@ -38,6 +38,7 @@ const Create = () => {
     backgroundColor: '#FF5722',
     teamName: ''
   });
+  const [showFinalCard, setShowFinalCard] = useState(false);
 
   const steps = ['Basics', 'Design', 'Preview'];
 
@@ -99,6 +100,80 @@ const Create = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-background relative overflow-hidden">
+      {/* Final Stunning Card Overlay */}
+      <AnimatePresence>
+        {showFinalCard && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-lg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="relative w-full max-w-lg mx-auto"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            >
+              {/* Confetti animation */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none z-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <svg className="w-full h-full" viewBox="0 0 400 400" fill="none">
+                  <circle cx="60" cy="60" r="6" fill="#FFB300" />
+                  <circle cx="340" cy="80" r="5" fill="#E91E63" />
+                  <circle cx="200" cy="30" r="4" fill="#4CAF50" />
+                  <circle cx="100" cy="350" r="7" fill="#2196F3" />
+                  <circle cx="370" cy="300" r="6" fill="#FF5722" />
+                  <circle cx="320" cy="200" r="4" fill="#FFC107" />
+                  <circle cx="50" cy="250" r="5" fill="#00BCD4" />
+                </svg>
+              </motion.div>
+              <motion.div
+                className="rounded-3xl shadow-2xl border-4 border-white/40 overflow-hidden bg-white/80 backdrop-blur-xl"
+                style={{
+                  background: `linear-gradient(135deg, ${formData.backgroundColor}cc, #fff8)`,
+                  boxShadow: `0 8px 40px 0 ${formData.backgroundColor}55`
+                }}
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2, type: 'spring', stiffness: 120, damping: 18 }}
+              >
+                <div className="p-10 text-center relative">
+                  {selectedOccasion && (
+                    <div className="inline-flex items-center gap-2 bg-white/30 backdrop-blur-sm rounded-full px-5 py-2 mb-6 shadow">
+                      <selectedOccasion.icon className="w-7 h-7 text-white drop-shadow" />
+                      <span className="font-bold text-lg text-white drop-shadow">{selectedOccasion.label}</span>
+                    </div>
+                  )}
+                  <h2 className="text-4xl font-extrabold mb-4 text-white drop-shadow-lg animate-pulse">
+                    {formData.title || `Happy ${selectedOccasion?.label || 'Celebration'}, ${formData.recipientName || 'Friend'}!`}
+                  </h2>
+                  {formData.message && (
+                    <p className="text-xl mb-6 text-white/90 animate-fade-in">
+                      {formData.message}
+                    </p>
+                  )}
+                  <p className="text-lg font-medium text-white/80 mb-2 animate-fade-in">
+                    From {formData.teamName || 'Your Team'}
+                  </p>
+                  <Button
+                    size="lg"
+                    className="mt-6 bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-3 text-lg font-bold shadow-lg hover:scale-105 transition-transform"
+                    onClick={() => setShowFinalCard(false)}
+                  >
+                    Close
+                  </Button>
+                </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Animated background elements */}
       <div className="absolute inset-0 bg-gradient-hero opacity-30" />
       <motion.div 
@@ -460,6 +535,7 @@ const Create = () => {
                       ) : (
                         <Button
                           className="px-6 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 transition-all duration-300 hover:scale-105"
+                          onClick={() => setShowFinalCard(true)}
                         >
                           Create Card
                           <Sparkles className="w-4 h-4 ml-2" />

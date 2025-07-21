@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -71,6 +71,17 @@ const sampleMessages = [
 const Sample = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(true);
+  const [showSlideshow, setShowSlideshow] = useState(false);
+  const [slideshowIndex, setSlideshowIndex] = useState(0);
+  const imageMessages = sampleMessages.filter(m => m.media && (m.media.type === 'image' || m.media.type === 'gif'));
+
+  useEffect(() => {
+    if (!showSlideshow) return;
+    const interval = setInterval(() => {
+      setSlideshowIndex((prev) => (prev + 1) % imageMessages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [showSlideshow, imageMessages.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-background relative overflow-hidden">
@@ -155,12 +166,82 @@ const Sample = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => setIsPlaying(!isPlaying)}
+                    onClick={() => {
+                      if (showSlideshow) {
+                        setShowSlideshow(false);
+                        setIsPlaying(false);
+                      } else if (imageMessages.length > 0) {
+                        setSlideshowIndex(0);
+                        setShowSlideshow(true);
+                        setIsPlaying(true);
+                      }
+                    }}
                     className="transition-all duration-300 hover:scale-105"
                   >
-                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    {showSlideshow && isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                   </Button>
                 </motion.div>
+      {/* Slideshow Modal */}
+      {showSlideshow && imageMessages.length > 0 && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-6 max-w-md w-full flex flex-col items-center">
+            <button
+              className="absolute top-2 right-2 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+              onClick={() => { setShowSlideshow(false); setIsPlaying(false); }}
+              title="Close slideshow"
+            >
+              <Pause className="w-5 h-5 text-gray-600" />
+            </button>
+            <div className="w-full h-64 flex items-center justify-center mb-4">
+              {imageMessages[slideshowIndex].media?.type === 'image' ? (
+                <img
+                  src={imageMessages[slideshowIndex].media?.url}
+                  alt="Slideshow"
+                  className="max-h-60 rounded-lg object-contain shadow-lg"
+                />
+              ) : (
+                <img
+                  src={imageMessages[slideshowIndex].media?.url}
+                  alt="Slideshow GIF"
+                  className="max-h-60 rounded-lg object-contain shadow-lg"
+                />
+              )}
+            </div>
+            <div className="text-center">
+              <div className="font-semibold text-gray-800 dark:text-white mb-1">
+                {imageMessages[slideshowIndex].author}
+              </div>
+              <div className="text-gray-600 dark:text-gray-300 text-sm">
+                {imageMessages[slideshowIndex].content}
+              </div>
+            </div>
+            <div className="flex gap-4 mt-6">
+              <button
+                onClick={() => setSlideshowIndex((slideshowIndex - 1 + imageMessages.length) % imageMessages.length)}
+                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                title="Previous"
+              >
+                <ArrowLeft className="w-5 h-5 text-gray-600" />
+              </button>
+              <button
+                onClick={() => setSlideshowIndex((slideshowIndex + 1) % imageMessages.length)}
+                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                title="Next"
+              >
+                <ArrowRight className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+            <div className="mt-4 flex gap-1 justify-center">
+              {imageMessages.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`inline-block w-2 h-2 rounded-full ${idx === slideshowIndex ? 'bg-orange-500' : 'bg-gray-300'}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
               </div>
               
               <motion.div

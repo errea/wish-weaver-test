@@ -120,7 +120,7 @@ export function WishCard({
             {/* Messages List */}
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {messages.map((message) => (
-                <div key={message.id} className="border-l-4 border-orange-500 pl-4 py-2">
+                <div key={message.id} className="border-l-4 border-orange-500 pl-4 py-2 relative group">
                   {/* Message Media */}
                   {message.media && (
                     <div className="mb-3 rounded-lg overflow-hidden">
@@ -157,7 +157,34 @@ export function WishCard({
                   <p className="text-gray-700 text-sm leading-relaxed mb-2">
                     {message.content}
                   </p>
-                  
+                  {/* Share Button */}
+                  <button
+                    className="absolute top-2 right-2 opacity-70 group-hover:opacity-100 transition-opacity p-1 rounded-full hover:bg-orange-100"
+                    title="Share this message"
+                    onClick={async () => {
+                      const shareData = {
+                        title: `Message from ${message.author}`,
+                        text: message.content + (message.author ? `\n— ${message.author}` : ''),
+                        url: window.location.href
+                      };
+                      if (navigator.share) {
+                        try {
+                          await navigator.share(shareData);
+                        } catch (e) {
+                          // user cancelled or error
+                        }
+                      } else {
+                        try {
+                          await navigator.clipboard.writeText(shareData.text + '\n' + shareData.url);
+                          alert('Message copied to clipboard!');
+                        } catch (e) {
+                          alert('Could not copy message.');
+                        }
+                      }
+                    }}
+                  >
+                    <Share2 className="w-4 h-4 text-orange-500" />
+                  </button>
                   {/* Author */}
                   <p className="text-xs font-medium text-gray-500">
                     — {message.author}
