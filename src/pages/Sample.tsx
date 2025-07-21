@@ -84,7 +84,7 @@ const Sample = () => {
   }, [showSlideshow, imageMessages.length]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background relative overflow-hidden px-2 sm:px-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 bg-gradient-hero opacity-30" />
       <motion.div 
@@ -127,8 +127,8 @@ const Sample = () => {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-8 relative">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-0 sm:px-4 py-6 sm:py-8 relative">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Card Preview */}
           <div className="lg:col-span-2">
             <motion.div 
@@ -137,11 +137,12 @@ const Sample = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4 sm:gap-0">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 }}
+                  className="w-full sm:w-auto text-center sm:text-left"
                 >
                   <h2 className="text-3xl font-bold bg-gradient-brand bg-clip-text text-transparent">Tim's Birthday Card</h2>
                   <p className="text-muted-foreground flex items-center gap-2 mt-1">
@@ -150,7 +151,7 @@ const Sample = () => {
                   </p>
                 </motion.div>
                 <motion.div 
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 w-full sm:w-auto justify-end"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 }}
@@ -248,7 +249,7 @@ const Sample = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
-                className="transition-transform duration-300 hover:scale-[1.01]"
+                className="transition-transform duration-300 hover:scale-[1.01] w-full"
               >
                 <WishCard
                   title="Hope your birthday is as awesome as you are, Tim!"
@@ -263,7 +264,7 @@ const Sample = () => {
 
             {/* Card Stats */}
             <motion.div 
-              className="grid sm:grid-cols-3 gap-4 mb-8"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, staggerChildren: 0.1 }}
@@ -319,7 +320,7 @@ const Sample = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-6 mt-8 lg:mt-0">
             {/* About This Card */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}

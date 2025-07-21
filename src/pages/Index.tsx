@@ -1,7 +1,11 @@
 import { ModernLanding } from '@/components/ModernLanding';
 
 const Index = () => {
-  return <ModernLanding />;
+  return (
+    <div className="w-full min-h-screen">
+      <ModernLanding />
+    </div>
+  );
 };
 
 export default Index;

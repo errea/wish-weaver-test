@@ -99,7 +99,7 @@ const Create = () => {
   const selectedColor = backgroundColors.find(c => c.color === formData.backgroundColor);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background relative overflow-hidden px-2 sm:px-4">
       {/* Final Stunning Card Overlay */}
       <AnimatePresence>
         {showFinalCard && (
@@ -214,7 +214,7 @@ const Create = () => {
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 py-8 relative">
+      <div className="max-w-6xl mx-auto px-0 sm:px-4 py-6 sm:py-8 relative">
         {/* Progress Steps */}
         <motion.div 
           className="mb-12"
@@ -226,7 +226,7 @@ const Create = () => {
         </motion.div>
 
         {/* Step Content */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           <div className="lg:col-span-2">
             <AnimatePresence mode="wait">
               <motion.div
@@ -237,7 +237,7 @@ const Create = () => {
                 exit="exit"
                 transition={{ duration: 0.3 }}
               >
-                <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm overflow-hidden">
+                <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm overflow-hidden w-full">
                   <CardContent className="p-8">
                     {currentStep === 0 && (
                       <motion.div 
@@ -258,7 +258,7 @@ const Create = () => {
                         </motion.div>
 
                         <motion.div 
-                          className="grid md:grid-cols-2 gap-6"
+                          className="grid grid-cols-1 md:grid-cols-2 gap-6"
                           variants={cardVariants}
                         >
                           <div className="space-y-3">
@@ -295,7 +295,7 @@ const Create = () => {
                             <Calendar className="w-4 h-4 text-primary" />
                             Choose an Occasion *
                           </Label>
-                          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
                             {occasions.map((occasion, index) => {
                               const IconComponent = occasion.icon;
                               return (
@@ -376,7 +376,7 @@ const Create = () => {
                             <Palette className="w-4 h-4 text-primary" />
                             Background Color
                           </Label>
-                          <div className="grid grid-cols-4 lg:grid-cols-6 gap-3">
+                          <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
                             {backgroundColors.map((color, index) => (
                               <motion.button
                                 key={color.color}
@@ -447,7 +447,7 @@ const Create = () => {
                         </motion.div>
 
                         <motion.div
-                          className="p-8 rounded-2xl shadow-2xl"
+                          className="p-4 sm:p-8 rounded-2xl shadow-2xl"
                           style={{ 
                             background: `linear-gradient(135deg, ${formData.backgroundColor}dd, ${formData.backgroundColor}aa)` 
                           }}
@@ -562,7 +562,7 @@ const Create = () => {
                     Live Preview
                   </h3>
                   <div 
-                    className="aspect-video rounded-lg p-4 flex items-center justify-center text-white text-center transition-all duration-500"
+                    className="aspect-video rounded-lg p-2 sm:p-4 flex items-center justify-center text-white text-center transition-all duration-500"
                     style={{ 
                       background: formData.backgroundColor 
                         ? `linear-gradient(135deg, ${formData.backgroundColor}dd, ${formData.backgroundColor}aa)`

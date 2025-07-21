@@ -129,27 +129,27 @@ export function ModernLanding() {
         <ThemeToggle />
       </div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 px-4">
+      <section className="relative overflow-hidden py-12 px-2 sm:py-16 sm:px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="space-y-8">
               <div className="space-y-4">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
                   Make Every{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
                     Occasion
                   </span>{' '}
                   Special
                 </h1>
-                <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
                   Create beautiful group cards with messages, photos, and videos from 
                   multiple contributors. Perfect for birthdays, farewells, celebrations, and more.
                 </p>
               </div>
 
               {/* Features */}
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3">
                   <div className="p-2 rounded-full bg-orange-100 dark:bg-orange-900/40">
                     <Users className="w-5 h-5 text-orange-600" />
@@ -192,11 +192,11 @@ export function ModernLanding() {
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link to="/create">
                   <Button 
                     size="lg" 
-                    className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 text-lg w-full dark:from-orange-600 dark:to-red-700"
+                    className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 text-base sm:text-lg w-full dark:from-orange-600 dark:to-red-700"
                   >
                     Create Your Card
                     <ArrowRight className="w-5 h-5 ml-2" />
@@ -206,7 +206,7 @@ export function ModernLanding() {
                   <Button 
                     variant="outline" 
                     size="lg"
-                    className="px-8 py-3 text-lg border-gray-300 hover:bg-gray-50 w-full dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white"
+                    className="px-6 py-3 text-base sm:text-lg border-gray-300 hover:bg-white hover:text-orange-500 w-full dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white"
                   >
                     View Sample
                   </Button>
@@ -215,10 +215,10 @@ export function ModernLanding() {
             </div>
 
             {/* Right Content - Interactive Card Preview */}
-            <div className="relative">
+            <div className="relative mt-10 lg:mt-0">
               {/* Card Controls */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4 sm:gap-0">
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
                   <button
                     onClick={() => {
                       if (showSlideshow) {
@@ -301,7 +301,7 @@ export function ModernLanding() {
                   </span>
                 </div>
                 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                   <button
                     onClick={prevDesign}
                     className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
@@ -612,7 +612,7 @@ export function ModernLanding() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-white text-white hover:bg-white hover:text-orange-500 px-8 py-3 text-lg w-full dark:border-orange-400 dark:hover:bg-gray-900 dark:hover:text-orange-400"
+                className="border-white text-dark hover:bg-white hover:text-orange-500 px-8 py-3 text-lg w-full dark:border-orange-400 dark:hover:bg-gray-900 dark:hover:text-orange-400"
               >
                 View Sample Card
               </Button>
